@@ -6,6 +6,7 @@ const cors = require('cors');
 const logger = require('./loggerMiddleware');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 //const http = require('http');
 
@@ -29,8 +30,6 @@ let notes = [
       important: true
     }
 ]
-
-app.use(cors);
 app.use(logger);
 
 app.get('/', (req, response) =>{
