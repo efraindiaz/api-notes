@@ -3,13 +3,15 @@
 const { response, request } = require('express');
 const express = require('express');
 const cors = require('cors');
+require('./mongo');
+
 const logger = require('./loggerMiddleware');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 //const http = require('http');
-
+const Note = require('./models/Note');
 let notes = [
     {
       id: 1,
@@ -37,7 +39,10 @@ app.get('/', (req, response) =>{
 });
 
 app.get('/api/notes', (req, response) =>{
-  response.json(notes);
+  Note.find({})
+    .then(notes =>{
+      response.json(notes);
+    })
 });
 
 app.get('/api/notes/:id', (request, response) =>{
